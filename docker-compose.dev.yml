@@ -1,0 +1,15 @@
+# Développement : docker compose -f docker-compose.dev.yml up
+services:
+  app:
+    build: .
+    environment:
+      NODE_ENV: development
+      APP_URL: http://localhost:3000
+      DEV_MOCK_PAYMENTS: "true"
+      DATABASE_PATH: /data/pdc-dev.sqlite
+    ports:
+      - "3000:3000"
+    volumes:
+      - pdc-dev-data:/data
+volumes:
+  pdc-dev-data:

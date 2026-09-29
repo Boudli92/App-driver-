@@ -1,0 +1,31 @@
+# Production : docker compose up -d
+# Caddy obtient et renouvelle automatiquement le certificat HTTPS pour DOMAIN.
+services:
+  app:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      NODE_ENV: production
+      TRUST_PROXY: "true"
+      DATABASE_PATH: /data/pdc.sqlite
+    volumes:
+      - pdc-data:/data
+    expose:
+      - "3000"
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      DOMAIN: ${DOMAIN}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+    depends_on:
+      - app
+volumes:
+  pdc-data:
+  caddy-data:

@@ -1,0 +1,23 @@
+{
+  "name": "private-driver-club",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.18"
+  },
+  "scripts": {
+    "start": "node src/server.ts",
+    "dev": "DEV_MOCK_PAYMENTS=true node --watch src/server.ts",
+    "typecheck": "tsc --noEmit -p .",
+    "test": "node --test --test-concurrency=1 tests/*.test.ts",
+    "check": "npm run typecheck && npm test",
+    "owner:create": "node src/cli.ts create-owner",
+    "seed:dev": "node src/cli.ts seed-dev",
+    "backup": "node src/cli.ts backup"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.0",
+    "@types/node": "^22.18.0"
+  }
+}
